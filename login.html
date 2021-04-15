@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1,maximum-scale=1">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<link href="style/css/sweetalert.css" rel="stylesheet">
+<link href="style/css/application.css" rel="stylesheet">
+<title>登录</title>
+</head>
+<body>
+	<header>
+		<div class="headerbar">
+			<h1>登录</h1>
+			<a class="navbar-toggle" onclick="history.go(-1)">
+				<span class="icon-m_goback"></span>
+			</a>
+		</div>
+	</header>
+<section class="wrapper">
+<form class="form-login clearfix">
+	<div><br /></div>
+	<div class="login">
+		<div>
+			<span class="icon-userlogin"></span>
+			<input type="text" class="logininput" name="name" id="name" placeholder="手机号或账号">
+		</div>
+		<div>
+			<span class="icon-passwordlogin"></span>
+			<input type="password" class="logininput" name="password" id="password" placeholder="请输入您的密码">
+		</div>
+	</div>
+	<div class="login-btn">
+		<a class="btn btn-block" id="denglu" >登录</a>
+		<br/>
+		<a class="btn btn-white btn-block"   href="register" >去注册</a>
+	</div>
+</form>
+</section>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script src="style/js/swipeSlide.min.js" type="text/javascript"></script>
+<script src="style/js/sweetalert.min.js" type="text/javascript"></script>
+<script src="style/js/jquery.mmenu.min.js" type="text/javascript"></script>
+<script src="style/js/icheck.min.js" type="text/javascript"></script>
+<script src="style/js/jquery.touchSwipe.min.js"  type="text/javascript" ></script>
+<script src="style/js/cityinit.js" type="text/javascript"></script>
+<script src="style/js/application.js" type="text/javascript"></script>
+<script>
+$(function () {
+    $("#denglu").click(function () {
+        var name=$("#name").val()
+		var password=$("#password").val()
+		console.log(name,password)
+        $.ajax({
+			url:"http://localhost:80/user/denglu",
+			type:"POST",
+			data:{
+				name:name,
+				password:password
+			},
+			success:function (data) {
+			    console.log(data) 
+				if (data&&data.status>0){
+					var str=JSON.stringify({token:data.test,time:new Date().getMilliseconds()})
+					localStorage.setItem("user",str)
+                    alert("登录成功")
+                    window.location.href="index.html";
+				}
+            }
+        })
+    })
+
+})
+</script>
+
+</body>
+</html>
